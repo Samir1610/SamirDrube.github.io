@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samir Drube — Data Analyst Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #080d18;
+      --bg2:       #0f1728;
+      --bg3:       #161f36;
+      --accent:    #00c9a7;
+      --accent2:   #0097d6;
+      --text:      #e8eaf2;
+      --muted:     #7a82a0;
+      --border:    rgba(255,255,255,0.07);
+      --card-bg:   rgba(255,255,255,0.04);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      font-size: 16px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(8,13,24,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 0 5rem;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 680px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0,201,167,0.1);
+      border: 1px solid rgba(0,201,167,0.25);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-bio {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #030a10;
+    }
+
+    .btn-primary:hover {
+      background: #00e0bb;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,201,167,0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── HERO SKILLS VISUAL ── */
+    .hero-visual {
+      position: relative;
+    }
+
+    .skills-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skills-card::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(0,201,167,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .skills-card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-row {
+      margin-bottom: 1.1rem;
+    }
+
+    .skill-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .skill-pct { color: var(--muted); font-size: 0.8rem; }
+
+    .skill-bar {
+      height: 5px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      animation: growBar 1.2s ease-out forwards;
+      transform-origin: left;
+    }
+
+    @keyframes growBar {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .tag {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto;
+      font-size: 1.02rem;
+    }
+
+    /* ── PROJECTS ── */
+    #proyectos {
+      padding: 7rem 0;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,201,167,0.3);
+      transform: translateY(-5px);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,201,167,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .project-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85) saturate(0.9);
+      transition: filter 0.3s;
+    }
+
+    .project-card:hover .project-img {
+      filter: brightness(0.95) saturate(1.1);
+    }
+
+    .project-img-placeholder {
+      width: 100%;
+      height: 220px;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+    }
+
+    .project-body {
+      padding: 1.75rem 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-lang {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .lang-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 5px;
+    }
+
+    .lang-badge.en {
+      background: rgba(0,151,214,0.12);
+      color: #5bc4f5;
+      border: 1px solid rgba(0,151,214,0.2);
+    }
+
+    .lang-badge.es {
+      background: rgba(220,100,50,0.12);
+      color: #f0956a;
+      border: 1px solid rgba(220,100,50,0.2);
+    }
+
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .tool-tag {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.77rem;
+      padding: 0.28rem 0.65rem;
+      border-radius: 5px;
+      font-weight: 500;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: 1px solid rgba(0,201,167,0.25);
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+      align-self: flex-start;
+    }
+
+    .project-link:hover {
+      background: rgba(0,201,167,0.08);
+      border-color: var(--accent);
+    }
+
+    .arrow-icon {
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    .project-link:hover .arrow-icon { transform: translate(3px, -3px); }
+
+    /* ── ABOUT / STATS ── */
+    #acerca {
+      padding: 7rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .about-text h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .about-text a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(0,201,167,0.06);
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-lbl {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── CONTACT ── */
+    #contacto {
+      padding: 7rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-box::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0,201,167,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-box h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2rem;
+      font-size: 1rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-copy {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.5rem; }
+      .nav-links a { font-size: 0.78rem; }
+
+      .hero-inner,
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+
+      #hero { padding: 6rem 0 3rem; }
+
+      .projects-grid { grid-template-columns: 1fr; }
+
+      .contact-box { padding: 2rem 1.5rem; }
+
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#acerca">Acerca</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <div>
+          <h1 class="hero-name">Samir<br /><span>Drube</span></h1>
+          <p class="hero-role">Data Analyst &amp; BI Developer</p>
+          <p class="hero-bio">
+            Economista especializado en análisis de datos y Business Intelligence.
+            Transformo datos en decisiones a través de SQL, Power BI, STATA y Excel —
+            desde el análisis exploratorio hasta dashboards ejecutivos.
+          </p>
+          <div class="hero-actions">
+            <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+            <a href="https://www.linkedin.com/in/samir-drube-682176245/" target="_blank" class="btn btn-outline">LinkedIn →</a>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROYECTOS ── -->
+  <section id="proyectos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Portafolio</span>
+        <h2 class="section-title">Proyectos destacados</h2>
+        <p class="section-desc">Análisis exploratorios end-to-end: desde la extracción con SQL hasta visualizaciones ejecutivas en Power BI.</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Proyecto 1 -->
+        <div class="project-card">
+          <div class="project-img-placeholder">📊</div>
+          <div class="project-body">
+            <div class="project-lang">
+              <span class="lang-badge en">English</span>
+            </div>
+            <h3 class="project-title">Bank Marketing Analysis</h3>
+            <p class="project-desc">
+              Análisis exploratorio completo del dataset Bank Marketing de UCI.
+              Utilicé SQL para responder preguntas clave de negocio e identifiqué
+              fortalezas, debilidades y el estado general de las campañas de marketing
+              del banco. Los resultados se visualizaron en un dashboard interactivo en Power BI.
+            </p>
+            <div class="project-tools">
+              <span class="tool-tag">SQL</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">EDA</span>
+              <span class="tool-tag">Marketing Analytics</span>
+            </div>
+            <a href="https://github.com/Samir1610/Bank-Marketing-english" target="_blank" class="project-link">
+              Ver proyecto en GitHub <span class="arrow-icon">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Proyecto 2 -->
+        <div class="project-card">
+          <div class="project-img-placeholder">🛒</div>
+          <div class="project-body">
+            <div class="project-lang">
+              <span class="lang-badge es">Español</span>
+            </div>
+            <h3 class="project-title">Superstore Retail Analysis</h3>
+            <p class="project-desc">
+              Análisis exploratorio del dataset Superstore de Kaggle. A través de SQL
+              y Power BI respondí preguntas estratégicas para comprender el rendimiento
+              del negocio: ventas por región, categorías más rentables, tendencias
+              temporales y oportunidades de mejora.
+            </p>
+            <div class="project-tools">
+              <span class="tool-tag">SQL</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">Retail Analytics</span>
+              <span class="tool-tag">Kaggle</span>
+            </div>
+            <a href="https://github.com/Samir1610/Superstore-proyect-spanish" target="_blank" class="project-link">
+              Ver proyecto en GitHub <span class="arrow-icon">↗</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ACERCA ── -->
+  <section id="acerca">
+    <div class="container">
+      <div class="about-inner">
+
+        <div class="about-text">
+          <span class="section-label">Sobre mí</span>
+          <h2>Economista que habla el idioma de los datos</h2>
+          <p>
+            Me especializo en convertir bases de datos complejas en insights accionables.
+            Con formación en Economía y experiencia práctica en herramientas de BI, trabajo
+            en el cruce entre el análisis cuantitativo y la comunicación visual efectiva.
+          </p>
+          <p>
+            Cada proyecto comienza con una pregunta de negocio y termina con una respuesta
+            clara, respaldada por datos. Mi objetivo es que las decisiones sean más inteligentes.
+          </p>
+          <p>
+            Encontrá mi trabajo completo en
+            <a href="https://github.com/Samir1610" target="_blank">GitHub</a>
+            o conectemos en
+            <a href="https://www.linkedin.com/in/samir-drube-682176245/" target="_blank">LinkedIn</a>.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACTO ── -->
+  <section id="contacto">
+    <div class="container">
+      <div class="contact-box">
+        <span class="section-label">Contacto</span>
+        <h2>¿Hablamos?</h2>
+        <p>
+          Si querés conectar o saber más sobre mi trabajo, podés escribirme por mail
+          o encontrarme en LinkedIn y GitHub.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:samirdrube16@gmail.com" class="btn btn-primary">
+            samirdrube16@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/samir-drube-682176245/" target="_blank" class="btn btn-outline">
+            LinkedIn →
+          </a>
+          <a href="https://github.com/Samir1610" target="_blank" class="btn btn-outline">
+            GitHub →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-name">Samir Drube</span>
+    <span class="footer-copy">Data Analyst &amp; BI Developer</span>
+  </footer>
+
+</body>
+</html>
